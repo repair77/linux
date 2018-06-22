@@ -1,0 +1,160 @@
+apache ab 压测工具
+说明
+
+ab 的用法是：ab [options] [http://]hostname[:port]/path
+
+例如：
+ab -n 5000 -c 200 http://localhost/index.php
+上例表示总共访问http://localhost/index.php这个脚本5000次，200并发同时执行。
+
+普通的测试，使用-c -n参数配合就可以完成任务
+
+ab常用参数的介绍：
+-n 测试的总请求数。默认时，仅执行一个请求；
+-c： 并发数，缺省是1；
+-t：测试所进行的总时间，秒为单位，缺省50000s
+-p：POST时的数据文件
+-w: 以HTML表的格式输出结果
+-H 添加请求头，例如 ‘Accept-Encoding: gzip’，以gzip方式请求
+-T POST数据所使用的Content-type头信息。
+-v 设置显示信息的详细程度 
+	4或更大值会显示头信息， 
+	3或更大值可以显示响应代码(404, 200等), 	
+	2或大值可以显示警告和其他信息。 
+-V 显示版本号并退出。
+-i 执行HEAD请求，而不是GET。
+-C -C cookie-name=value 对请求附加一个Cookie:行。 
+其典型形式是name=value的一个参数对。此参数可以重复。
+
+
+
+
+
+
+
+
+示例:
+
+
+原生php压测(10000次请求,200次并发)
+
+D:\apache2.4.9>bin\ab.exe -n10000 -c200 http://127.0.0.1/yaf/php.php
+This is ApacheBench, Version 2.3 <$Revision: 1554214 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Apache
+Server Hostname:        127.0.0.1
+Server Port:            80
+
+Document Path:          /yaf/php.php
+Document Length:        8 bytes
+
+Concurrency Level:      200
+Time taken for tests:   21.354 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1690000 bytes
+HTML transferred:       80000 bytes
+Requests per second:    468.29 [#/sec] (mean)
+Time per request:       427.084 [ms] (mean)
+Time per request:       2.135 [ms] (mean, across all concurrent requests)
+Transfer rate:          77.29 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   0.5      1      11
+Processing:   192  420  46.4    406     569
+Waiting:      156  380  55.1    376     559
+Total:        193  421  46.4    407     570
+
+Percentage of the requests served within a certain time (ms)
+  50%    407
+  66%    417
+  75%    429
+  80%    446
+  90%    494
+  95%    527
+  98%    541
+  99%    547
+ 100%    570 (longest request)
+
+
+
+
+
+
+
+yaf框架压测(10000次请求,200次并发)
+
+D:\apache2.4.9>bin\ab.exe -n10000 -c200 http://127.0.0.1/yaf/index.php
+This is ApacheBench, Version 2.3 <$Revision: 1554214 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Apache
+Server Hostname:        127.0.0.1
+Server Port:            80
+
+Document Path:          /yaf/index.php
+Document Length:        8 bytes
+
+Concurrency Level:      200
+Time taken for tests:   23.684 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      1690000 bytes
+HTML transferred:       80000 bytes
+Requests per second:    422.22 [#/sec] (mean)
+Time per request:       473.687 [ms] (mean)
+Time per request:       2.368 [ms] (mean, across all concurrent requests)
+Transfer rate:          69.68 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    1   0.8      1      19
+Processing:   273  464  39.9    456     743
+Waiting:      211  418  48.7    420     589
+Total:        274  465  39.9    457     743
+
+Percentage of the requests served within a certain time (ms)
+  50%    457
+  66%    463
+  75%    469
+  80%    481
+  90%    526
+  95%    544
+  98%    571
+  99%    583
+ 100%    743 (longest request)
+
+
+
